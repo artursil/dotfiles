@@ -1,5 +1,5 @@
 #! /bin/bash
-sudo apt install git zsh bat rofi dunst libnotify-dev
+sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip
 
 # Zsh config
 chsh -s $(which zsh)
