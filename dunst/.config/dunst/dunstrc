@@ -1,0 +1,39 @@
+[global]
+    width = 400
+    offset = 5x25
+    
+    progress_bar_min_width = 380
+    progress_bar_max_width = 380
+    progress_bar_corner_radius = 2
+
+    padding = 10
+    horizontal_padding = 10
+    frame_width = 1
+    gap_size = 3
+    font = "MesloLG Nerd Font 12"
+    timeout = 2
+
+    transparency = 20
+
+    icon_path = "/usr/share/icons/Adwaita"
+    enable_recursive_icon_lookup = true
+    corner_radius = 2
+
+
+    [global]
+    frame_color = "#89b4fa"
+    separator_color= frame
+    highlight = "#89b4fa"
+    
+    [urgency_low]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    
+    [urgency_normal]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    
+    [urgency_critical]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    frame_color = "#fab387"
