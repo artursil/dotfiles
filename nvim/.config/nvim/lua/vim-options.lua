@@ -35,6 +35,10 @@ keymap("n", '<C-S-v>', '"+p', opts)
 
 
 -- Visual --
+keymap("v", "j", "h", opts)
+keymap("v", "k", "j", opts)
+keymap("v", "l", "k", opts)
+keymap("v", ";", "l", opts)
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
