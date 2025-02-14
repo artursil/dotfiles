@@ -25,7 +25,6 @@ install_whatsapp() {
     if [ "$INSTALL_METHOD" == "snap" ]; then
         sudo apt install -y snapd
         sudo snap install whatsapp-linux-app
-        sudo snap install whatsapp-for-linux
     elif [ "$INSTALL_METHOD" == "flatpak" ]; then
         sudo apt install -y flatpak
         remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
