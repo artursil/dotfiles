@@ -12,8 +12,10 @@ return {
 
       vim.keymap.set("n", "<space>x", ":JupyniumExecuteCell<CR>")
       vim.keymap.set("n", "<space>c", ":JupyniumClearCell<CR>")
-      vim.keymap.set("n", "<PageUp>", ":JupyniumScrollNotebookUp<CR>")
-      vim.keymap.set("n", "<PageDown>", ":JupyniumScrollNotebookDown<CR>")
+      vim.keymap.set("n", "<space>ns", ":JupyniumStartAndAttachToServer<CR>")
+      vim.keymap.set("n", "<space>nr", ":JupyniumKernelRestart<CR>")
+      vim.keymap.set("n", "<space>nu", ":JupyniumScrollNotebookUp<CR>")
+      vim.keymap.set("n", "<space>nd", ":JupyniumScrollNotebookDown<CR>")
       vim.keymap.set("n", "<space>js", ":JupyniumScrollToCell<CR>")
       vim.keymap.set("n", "<space>K", ":JupyniumHover<CR>")
       vim.keymap.set("n", "<space>jo", ":JupyniumToggleOutputScroll<CR>")
