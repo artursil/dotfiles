@@ -1,6 +1,7 @@
 #! /bin/bash
 sudo apt update
-sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip
+sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip \
+  ripgrep # for live_grep
 
 # Installing neovim from source
 sudo apt remove --purge neovim neovim-runtime -y
