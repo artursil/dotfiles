@@ -1,7 +1,9 @@
 #! /bin/bash
 sudo apt update
-sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip \
-  ripgrep # for live_grep
+sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip
+
+sudo apt install ripgrep \ # for live_grep
+sudo apt install maim \ # for screenshots
 
 # Installing neovim from source
 sudo apt remove --purge neovim neovim-runtime -y
@@ -39,14 +41,25 @@ else
 fi
 
 # Install zoxide if not installed
-if ! command -v zoxide &> /dev/null; then
-    echo "Installing zoxide..."
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-else
-    echo "zoxide is already installed."
+echo "Do you want to install zoxide (y/n)"
+read -r response
+
+if [[ "$response" =~ ^[Yy]$ ]]; then
+  if ! command -v zoxide &> /dev/null; then
+      echo "Installing zoxide..."
+      curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  else
+      echo "zoxide is already installed."
+  fi
 fi
+
 #Npm
-sudo apt update && sudo apt install nodejs npm -y
+echo "Do you want to install npm (y/n)"
+read -r response
+
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    sudo apt update && sudo apt install nodejs npm -y
+fi
 
 
 echo "Do you want to install fonts (y/n)"
