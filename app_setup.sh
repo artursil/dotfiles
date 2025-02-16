@@ -2,6 +2,7 @@
 
 INSTALL_METHOD="snap"  # Options: snap, flatpak
 
+sudo apt update
 
 install_zotero() {
   # Zotero installation
@@ -36,8 +37,20 @@ install_whatsapp() {
     echo "WhatsApp installation completed!"
 }
 
-PROGRAMS=("Zotero" "WhatsApp")
-INSTALL_FUNCTIONS=("install_zotero" "install_whatsapp")
+install_vscode() {
+  cd ~./Downloads
+  wget -O code.deb "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+  sudo dpkg -i code.deb
+  sudo apt -f install
+  rm code.deb
+}
+
+install_spotify() {
+    sudo snap install spotify
+}
+
+PROGRAMS=("Zotero" "WhatsApp" "Vscode" "Spotify")
+INSTALL_FUNCTIONS=("install_zotero" "install_whatsapp" "install_vscode" "install_spotify")
 
 
 read -p "Do you want to install all programs? (yes/no) " INSTALL_ALL
