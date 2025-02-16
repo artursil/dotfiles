@@ -17,7 +17,7 @@ return {
       local builtin = require("telescope.builtin")
       vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
       vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-      vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
+      vim.keymap.set("n", "<leader>fu", builtin.oldfiles, {})
       vim.keymap.set("n", "<leader>fa", function()
         local python_site_packages = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
         require("telescope.builtin").live_grep({
