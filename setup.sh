@@ -1,6 +1,7 @@
 #! /bin/bash
 sudo apt update
-sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip htop
+sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip htop \
+    tmux
 
 sudo apt install ripgrep \ # for live_grep
 sudo apt install maim \ # for screenshots
