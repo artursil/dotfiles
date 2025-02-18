@@ -1,28 +1,30 @@
 return {
     'numToStr/Comment.nvim',
     opts = {
-        ---Add a space b/w comment and the line
         padding = true,
-        ---Whether the cursor should stay at its position
         sticky = true,
         toggler = {
-        ---Lines to be ignored while (un)comment
-            ---Line-comment toggle keymap
-            line = '<C-/>',  -- Change `gcc` to `<C-/>`
-            ---Block-comment toggle keymap
-            block = '<C-?>', -- Change `gbc` to `<C-?>` (or another key if `<C-/>` fails)
+            line = '<C-_>',  -- Works in tmux
+            block = '<C-?>',
         },
-        ---LHS of operator-pending mappings in NORMAL and VISUAL mode
         opleader = {
-            ---Line-comment keymap
-            line = '<C-/>',  -- Change `gc` to `<C-/>`
-            ---Block-comment keymap
-            block = '<C-?>', -- Change `gb` to `<C-?>`
+            line = '<C-_>',  -- Works in tmux
+            block = '<C-?>',
         },
-        ---Enable keybindings
         mappings = {
-            basic = true, -- Enables the operator-pending and toggler mappings
-            extra = true, -- Enables extra mappings
+            basic = true,
+            extra = true,
         }
-    }
+    },
+    config = function()
+        require('Comment').setup()
+
+        -- Ensure compatibility in both tmux and normal terminal
+        vim.api.nvim_set_keymap('n', '<C-/>', '<cmd>lua require("Comment.api").toggle.linewise.current()<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('v', '<C-/>', '<esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', { noremap = true, silent = true })
+
+        -- Also explicitly map <C-_> for tmux
+        vim.api.nvim_set_keymap('n', '<C-_>', '<cmd>lua require("Comment.api").toggle.linewise.current()<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('v', '<C-_>', '<esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', { noremap = true, silent = true })
+    end
 }
