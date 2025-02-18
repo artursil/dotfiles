@@ -1,6 +1,6 @@
 return {
   "alexghergh/nvim-tmux-navigation",
-  enabled = false,
+  enabled = true,
   config = function()
     require('nvim-tmux-navigation').setup({})
     vim.keymap.set("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", {})

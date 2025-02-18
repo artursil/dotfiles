@@ -18,10 +18,10 @@ keymap("n", "l", "k", opts)
 keymap("n", ";", "l", opts)
 
 -- Better window navigation
-keymap("n", "<C-j>", "<C-w>h", opts)
-keymap("n", "<C-k>", "<C-w>j", opts)
-keymap("n", "<C-l>", "<C-w>k", opts)
-keymap("n", "<C-;>", "<C-w>l", opts)
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
 
 keymap('n', '<leader>h', ':nohlsearch<CR>')
 vim.wo.number = true
