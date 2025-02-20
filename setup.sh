@@ -6,6 +6,16 @@ sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip htop \
 sudo apt install ripgrep \ # for live_grep
 sudo apt install maim \ # for screenshots
 
+# Lock screen
+sudo apt purge i3lock
+sudo apt install build-essential libpam0g-dev libxcb-randr0-dev libxcb-xinerama0-dev libxcb-xkb-dev libxcb-cursor-dev pkg-config libx11-dev libxinerama-dev libxrandr-dev libxcb-xrm-dev autoconf libxkbcommon-x11-dev
+git clone https://github.com/Raymo111/i3lock-color.git $HOME/Downloads/i3lock-color
+cd $HOME/Downloads/i3lock-color
+$HOME/Downloads/i3lock-color/build.sh
+$HOME/Downloads/i3lock-color/install-i3lock-color.sh
+sudo rm -r $HOME/Downloads/i3lock-color
+wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | sudo bash -s system
+
 # Installing neovim from source
 if ! command -v nvim &> /dev/null; then
     sudo apt remove --purge neovim neovim-runtime -y
