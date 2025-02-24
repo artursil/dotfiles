@@ -18,6 +18,8 @@ exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper_1.jpg
 exec --no-startup-id xrdb -merge ~/.Xresources
 # exec --no-startup-id ~/.config/i3/workspaces_setup.sh
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
+exec --no-startup-id xautolock -time 1 -locker "betterlockscreen -l dim" &
+
 
 # Desktop notifications
 exec --no-startup-id dunst
@@ -71,7 +73,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty 
+bindsym $mod+Return exec kitty -- tmux new-session
 
 # kill focused window
 bindsym $mod+Shift+q kill
