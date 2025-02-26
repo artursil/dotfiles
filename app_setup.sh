@@ -4,6 +4,11 @@ INSTALL_METHOD="snap"  # Options: snap, flatpak
 
 sudo apt update
 
+# Install obs
+sudo add-apt-repository ppa:obsproject/obs-studio
+
+sudo apt install obs-studio
+
 install_zotero() {
   # Zotero installation
   sudo apt update && sudo apt install -y libgtk-3-0 libdbus-glib-1-2 libxss1
