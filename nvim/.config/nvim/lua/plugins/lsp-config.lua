@@ -21,15 +21,28 @@ return {
 
       local lspconfig = require("lspconfig")
       local on_attach = function(client, bufnr)
-            vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics" })
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics" })
       end
+      
       lspconfig.pyright.setup({
-        on_attach=on_attach,
+        on_attach = on_attach,
         capabilities = capabilities,
       })
+
       lspconfig.lua_ls.setup({
-        on_attach=on_attach,
-        capabilities = capabilities
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+      
+      lspconfig.rust_analyzer.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = { allFeatures = true },
+            checkOnSave = { command = "clippy" },
+          },
+        },
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -40,3 +53,4 @@ return {
     end,
   },
 }
+
