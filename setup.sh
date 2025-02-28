@@ -6,6 +6,9 @@ sudo apt install git zsh bat rofi dunst libnotify-dev gh xclip htop \
 sudo apt install ripgrep \ # for live_grep
 sudo apt install maim \ # for screenshots
 
+# Ghostty
+sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+
 # Lock screen
 sudo apt purge i3lock
 sudo apt install build-essential libpam0g-dev libxcb-randr0-dev libxcb-xinerama0-dev libxcb-xkb-dev libxcb-cursor-dev pkg-config libx11-dev libxinerama-dev libxrandr-dev libxcb-xrm-dev autoconf libxkbcommon-x11-dev

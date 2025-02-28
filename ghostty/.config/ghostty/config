@@ -1,0 +1,12 @@
+theme = rose-pine
+
+# Set the font to Fira Code Nerd Font
+font-family = "Fira Code Nerd Font"
+
+# Font size
+font-size = 10
+
+# Transparency (adjust 0.0 - 1.0, where 0 is fully transparent)
+background-opacity = 0.9
+window-decoration = none
+
