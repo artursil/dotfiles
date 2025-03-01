@@ -9,6 +9,10 @@ sudo apt install maim \ # for screenshots
 # Ghostty
 sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
+#Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup component add rust-analyzer
+
 # Lock screen
 sudo apt purge i3lock
 sudo apt install build-essential libpam0g-dev libxcb-randr0-dev libxcb-xinerama0-dev libxcb-xkb-dev libxcb-cursor-dev pkg-config libx11-dev libxinerama-dev libxrandr-dev libxcb-xrm-dev autoconf libxkbcommon-x11-dev
