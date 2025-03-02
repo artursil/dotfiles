@@ -23,7 +23,7 @@ return {
       local on_attach = function(client, bufnr)
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics" })
       end
-      
+
       lspconfig.pyright.setup({
         on_attach = on_attach,
         capabilities = capabilities,
@@ -33,7 +33,7 @@ return {
         on_attach = on_attach,
         capabilities = capabilities,
       })
-      
+
       lspconfig.rust_analyzer.setup({
         on_attach = on_attach,
         capabilities = capabilities,
