@@ -95,10 +95,15 @@ bindsym $mod+d exec --no-startup-id rofi -show window \
 		-config ~/.config/rofi/rofidmenu.rasi 
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+semicolon focus right
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -238,7 +243,7 @@ client.background        $base
 
 
 gaps outer 0
-gaps inner 20
+gaps inner 15
 
 
 

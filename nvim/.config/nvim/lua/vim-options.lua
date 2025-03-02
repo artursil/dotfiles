@@ -12,10 +12,10 @@ local opts = { noremap = true, silent = true }
 
 
 -- Normal
-keymap("n", "j", "h", opts)
-keymap("n", "k", "j", opts)
-keymap("n", "l", "k", opts)
-keymap("n", ";", "l", opts)
+-- keymap("n", "j", "h", opts)
+-- keymap("n", "k", "j", opts)
+-- keymap("n", "l", "k", opts)
+-- keymap("n", ";", "l", opts)
 
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -35,10 +35,10 @@ keymap("n", '<C-S-v>', '"+p', opts)
 
 
 -- Visual --
-keymap("v", "j", "h", opts)
-keymap("v", "k", "j", opts)
-keymap("v", "l", "k", opts)
-keymap("v", ";", "l", opts)
+-- keymap("v", "j", "h", opts)
+-- keymap("v", "k", "j", opts)
+-- keymap("v", "l", "k", opts)
+-- keymap("v", ";", "l", opts)
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
