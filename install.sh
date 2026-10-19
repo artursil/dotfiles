@@ -3,7 +3,7 @@
 #
 #   ./install.sh                 # everything
 #   ./install.sh base dev link   # only some sections
-#   APPS="spotify tidal" ./install.sh apps
+#   APPS="tidal vscode" ./install.sh apps
 #
 # Sections run in this order: base desktop terminal dev apps link.
 # Every step is safe to re-run: things already installed are skipped.
@@ -11,7 +11,7 @@ set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ALL_SECTIONS=(base desktop terminal dev apps link)
-ALL_APPS=(chrome vscode cursor spotify tidal whatsapp zotero obs steam nordvpn ollama nvidia)
+ALL_APPS=(chrome vscode tidal whatsapp zotero obs nordvpn nvidia)
 read -r -a APPS <<< "${APPS:-${ALL_APPS[*]}}"
 STOW_PACKAGES=(zshrc tmux nvim i3 polybar picom rofi dunst ghostty kitty ohmyposh qutebrowser ranger)
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
@@ -125,14 +125,6 @@ install_deb_url() {  # $1 = name, $2 = url
 }
 app_chrome()   { have google-chrome || install_deb_url chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; }
 app_vscode()   { have code || install_deb_url vscode "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"; }
-app_cursor() {
-    have cursor && return
-    curl -fsSL https://downloads.cursor.com/keys/anysphere.asc | sudo gpg --dearmor --yes -o /usr/share/keyrings/anysphere.gpg
-    printf 'Types: deb\nURIs: https://downloads.cursor.com/aptrepo\nSuites: stable\nComponents: main\nSigned-By: /usr/share/keyrings/anysphere.gpg\n' \
-        | sudo tee /etc/apt/sources.list.d/cursor.sources >/dev/null
-    sudo apt-get update && apt_install cursor
-}
-app_spotify()  { sudo snap install spotify; }
 app_whatsapp() { sudo snap install whatsapp-linux-app; }
 app_nordvpn()  { sudo snap install nordvpn; }
 app_tidal()    { sudo flatpak install -y flathub com.mastermindzh.tidal-hifi; }
@@ -140,12 +132,6 @@ app_obs() {
     have obs && return
     sudo add-apt-repository -y ppa:obsproject/obs-studio
     apt_install obs-studio
-}
-app_steam() {
-    have steam && return
-    sudo dpkg --add-architecture i386
-    sudo add-apt-repository -y multiverse
-    sudo apt-get update && apt_install steam-installer
 }
 app_zotero() {
     [ -x /opt/zotero/zotero ] && return
@@ -157,7 +143,6 @@ app_zotero() {
     sudo /opt/zotero/set_launcher_icon || true
     ln -sf /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop
 }
-app_ollama()   { have ollama || curl -fsSL https://ollama.com/install.sh | sh; }
 app_nvidia() {
     lspci | grep -qi nvidia || { echo "No NVIDIA GPU, skipping driver"; return; }
     apt_install ubuntu-drivers-common nvtop

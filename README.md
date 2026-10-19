@@ -24,14 +24,14 @@ It runs these sections in order. Each step skips anything already installed, so 
 | `desktop`  | i3, polybar, picom, rofi, dunst, feh, maim, playerctl, brightnessctl, pavucontrol, nm-applet, dex, xss-lock, xautolock, i3lock-color, betterlockscreen |
 | `terminal` | ghostty, kitty, Nerd Fonts (FiraCode, Meslo, JetBrainsMono) |
 | `dev`      | neovim (latest stable, in `/opt`), rust + rust-analyzer, node/npm, go, uv, docker, oh-my-posh, zoxide, fzf, lazygit, tmux tpm, tmuxifier |
-| `apps`     | chrome, vscode, cursor, spotify, tidal (tidal-hifi), whatsapp, zotero, obs, steam, nordvpn, ollama, nvidia driver (only if an NVIDIA GPU is found) |
+| `apps`     | chrome, vscode, tidal (tidal-hifi), whatsapp, zotero, obs, nordvpn, nvidia driver (only if an NVIDIA GPU is found) |
 | `link`     | stows all configs into `~`, clones the qutebrowser theme, copies the wallpaper, installs tmux and nvim plugins, makes zsh the login shell |
 
 You can run only some sections, or pick which apps to install:
 
 ```bash
 ./install.sh base dev link
-APPS="spotify tidal vscode" ./install.sh apps
+APPS="tidal vscode" ./install.sh apps
 ```
 
 If a real file is in the way of a link (for example the default `~/.zshrc`), the script moves it to `~/.dotfiles-backup/` before linking.
