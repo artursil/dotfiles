@@ -1,2 +1,4 @@
 nvim.bak/
 *molten*
+.mypy_cache/
+__pycache__/

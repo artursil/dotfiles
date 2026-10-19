@@ -13,9 +13,11 @@ source "${ZINIT_HOME}/zinit.zsh"
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/cat.json)"
 
 
-export PATH=$PATH:/home/artursil/.local/bin
+export PATH="$HOME/.local/bin:$PATH"
 export PATH=$HOME/.npm-global/bin:$PATH
 export PATH="$HOME/.fzf/bin:$PATH"
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Misc options
 unsetopt beep # removing annoying beep
@@ -67,18 +69,25 @@ setopt hist_find_no_dups
 
 # Aliases
 alias ls='ls --color'
+alias ll='ls -alh --color'
 alias vim='nvim'
 alias c='clear'
-alias cat='batcat'
 alias bat='batcat'
 alias inv='nvim $(fzf -m --preview="bat --color=always {}")'
 alias fcd='cd "$(find ${1:-.} -mindepth 1 -type d 2>/dev/null | fzf)"'
 alias fls='lsd -ah "$(find ${1:-.} -mindepth 1 -type d 2>/dev/null | fzf)"'
-alias gh='cd $HOME'
+alias goh='cd $HOME'
+alias rr='ranger'
+alias dotfiles='cd $HOME/dotfiles'
+alias vconf='cd $HOME/.config/nvim'
 alias zs='source $HOME/.zshrc'
 
 
 # Shell integrations
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+eval "$(tmuxifier init -)"
+
+# Machine-specific stuff (project aliases, conda, CUDA) lives outside the repo
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
