@@ -28,7 +28,7 @@ section_base() {
     log "Base packages"
     sudo apt-get update
     apt_install git curl wget stow zsh tmux build-essential cmake unzip jq \
-        ripgrep fd-find bat lsd btop htop fastfetch xclip gh tldr ranger \
+        ripgrep fd-find bat lsd btop htop fastfetch xclip gh tealdeer ranger \
         python3-pip python3-venv pipx software-properties-common \
         flatpak snapd timeshift mpv 7zip imagemagick
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -36,6 +36,7 @@ section_base() {
     # Ubuntu names these binaries batcat / fdfind
     ln -sf /usr/bin/batcat ~/.local/bin/bat
     ln -sf /usr/bin/fdfind ~/.local/bin/fd
+    tldr --update || true  # tealdeer ships without a page cache
 }
 
 # ---------------------------------------------------------------- desktop (i3)

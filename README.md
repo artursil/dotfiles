@@ -20,7 +20,7 @@ It runs these sections in order. Each step skips anything already installed, so 
 
 | Section    | Installs |
 |------------|----------|
-| `base`     | git, curl, stow, zsh, tmux, ripgrep, fd, bat, lsd, btop, fastfetch, gh, tldr, ranger, pipx, flatpak + Flathub, timeshift, mpv |
+| `base`     | git, curl, stow, zsh, tmux, ripgrep, fd, bat, lsd, btop, fastfetch, gh, tldr (tealdeer), ranger, pipx, flatpak + Flathub, timeshift, mpv |
 | `desktop`  | i3, polybar, picom, rofi, dunst, feh, maim, playerctl, brightnessctl, pavucontrol, nm-applet, dex, xss-lock, xautolock, i3lock-color, betterlockscreen |
 | `terminal` | ghostty, kitty, Nerd Fonts (FiraCode, Meslo, JetBrainsMono) |
 | `dev`      | neovim (latest stable, in `/opt`), rust + rust-analyzer, node/npm, go, uv, docker, oh-my-posh, zoxide, fzf, lazygit, tmux tpm, tmuxifier |
