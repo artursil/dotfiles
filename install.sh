@@ -39,7 +39,7 @@ section_base() {
     log "Base packages"
     sudo apt-get update
     apt_install git curl wget stow zsh tmux build-essential cmake unzip jq \
-        ripgrep fd-find bat lsd btop htop fastfetch xclip gh tldr ranger \
+        ripgrep fd-find bat lsd btop htop fastfetch xclip gh tealdeer ranger \
         python3-pip python3-venv pipx software-properties-common \
         flatpak snapd timeshift mpv 7zip imagemagick
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -47,11 +47,14 @@ section_base() {
     # Ubuntu names these binaries batcat / fdfind
     ln -sf /usr/bin/batcat ~/.local/bin/bat
     ln -sf /usr/bin/fdfind ~/.local/bin/fd
+    tldr --update || true  # tealdeer ships without a page cache
 }
 
 # ---------------------------------------------------------------- desktop (i3)
 section_desktop() {
     log "i3 desktop"
+    # Ubuntu 26.04 no longer ships Xorg by default; without it GDM hides the i3 session
+    apt_install xserver-xorg xinit
     apt_install i3 polybar picom rofi dunst libnotify-bin feh maim \
         playerctl brightnessctl pavucontrol pulseaudio-utils \
         network-manager-gnome dex xss-lock xautolock x11-xserver-utils arandr
@@ -74,10 +77,25 @@ section_desktop() {
 }
 
 # ---------------------------------------------------------------- terminal
+# Ghostty needs OpenGL 4.3. Older GPUs (e.g. Intel HD 3000 in a ThinkPad X220)
+# only do 3.3, so those machines get kitty. If detection fails, assume a modern GPU.
+gpu_supports_ghostty() {
+    have eglinfo || apt_install mesa-utils
+    local ver
+    ver="$(eglinfo -B -p surfaceless 2>/dev/null | grep -Po 'OpenGL core profile version: \K[0-9]+\.[0-9]+' | head -1)"
+    [ -z "$ver" ] && return 0
+    printf '%s\n4.3\n' "$ver" | sort -V -C -r
+}
+
 section_terminal() {
     log "Terminals and fonts"
     apt_install kitty
-    have ghostty || sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+    if gpu_supports_ghostty; then
+        have ghostty || sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+    else
+        log "GPU lacks OpenGL 4.3, using kitty instead of ghostty"
+        have ghostty && sudo apt-get remove -y ghostty
+    fi
 
     local fontdir=~/.local/share/fonts
     mkdir -p "$fontdir"

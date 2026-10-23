@@ -73,7 +73,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec ghostty -e tmux
+# ghostty if installed (install.sh skips it on GPUs without OpenGL 4.3), else kitty
+bindsym $mod+Return exec sh -c 'command -v ghostty >/dev/null && exec ghostty -e tmux || exec kitty -e tmux'
 
 # kill focused window
 bindsym $mod+Shift+q kill

@@ -20,9 +20,9 @@ It runs these sections in order. Each step skips anything already installed, so 
 
 | Section    | Installs |
 |------------|----------|
-| `base`     | git, curl, stow, zsh, tmux, ripgrep, fd, bat, lsd, btop, fastfetch, gh, tldr, ranger, pipx, flatpak + Flathub, timeshift, mpv |
+| `base`     | git, curl, stow, zsh, tmux, ripgrep, fd, bat, lsd, btop, fastfetch, gh, tldr (tealdeer), ranger, pipx, flatpak + Flathub, timeshift, mpv |
 | `desktop`  | i3, polybar, picom, rofi, dunst, feh, maim, playerctl, brightnessctl, pavucontrol, nm-applet, dex, xss-lock, xautolock, i3lock-color, betterlockscreen |
-| `terminal` | ghostty, kitty, Nerd Fonts (FiraCode, Meslo, JetBrainsMono) |
+| `terminal` | ghostty (or kitty on GPUs without OpenGL 4.3), kitty, Nerd Fonts (FiraCode, Meslo, JetBrainsMono) |
 | `dev`      | neovim (latest stable, in `/opt`), rust + rust-analyzer, node/npm, go, uv, docker, oh-my-posh, zoxide, fzf, lazygit, tmux tpm, tmuxifier |
 | `apps`     | chrome, vscode (+ its settings and keybindings), nvidia driver (only if an NVIDIA GPU is found); optional, asked one by one: tidal (tidal-hifi), whatsapp, zotero, obs, nordvpn |
 | `link`     | stows all configs into `~`, clones the qutebrowser theme, copies the wallpaper, installs tmux and nvim plugins, makes zsh the login shell |
@@ -71,7 +71,7 @@ To link one package by hand: `cd ~/dotfiles && stow nvim`.
 
 | Keys | Action |
 |------|--------|
-| `mod+Enter` | ghostty with tmux |
+| `mod+Enter` | ghostty (or kitty) with tmux |
 | `mod+p` | app launcher (rofi) |
 | `mod+d` | switch window (rofi) |
 | `mod+Shift+q` | close window |
