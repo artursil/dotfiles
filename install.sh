@@ -4,14 +4,19 @@
 #   ./install.sh                 # everything
 #   ./install.sh base dev link   # only some sections
 #   APPS="tidal vscode" ./install.sh apps
+#   YES=1 ./install.sh           # unattended: install the optional apps too
 #
 # Sections run in this order: base desktop terminal dev apps link.
+# Big optional apps (obs, tidal, whatsapp, zotero, nordvpn) are asked about
+# one by one before anything runs, unless APPS or YES=1 is given.
 # Every step is safe to re-run: things already installed are skipped.
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ALL_SECTIONS=(base desktop terminal dev apps link)
 ALL_APPS=(chrome vscode tidal whatsapp zotero obs nordvpn nvidia)
+OPTIONAL_APPS=(obs tidal whatsapp zotero nordvpn)
+APPS_GIVEN="${APPS+1}"
 read -r -a APPS <<< "${APPS:-${ALL_APPS[*]}}"
 STOW_PACKAGES=(zshrc tmux nvim i3 polybar picom rofi dunst ghostty kitty ohmyposh qutebrowser ranger)
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
@@ -22,6 +27,12 @@ log()  { printf '\n\033[1;34m==> %s\033[0m\n' "$*"; }
 have() { command -v "$1" &>/dev/null; }
 apt_install() { sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"; }
 gh_latest() { curl -fsSL "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": *"v?\K[^"]*'; }
+in_list() { local x=$1; shift; for i in "$@"; do [ "$i" = "$x" ] && return 0; done; return 1; }
+ask() {  # $1 = question; YES=1 answers yes to everything
+    [ "${YES:-}" = 1 ] && return 0
+    local a; read -r -p "$1 [y/N] " a < /dev/tty
+    [[ "$a" =~ ^[Yy] ]]
+}
 
 # ---------------------------------------------------------------- base
 section_base() {
@@ -124,7 +135,23 @@ install_deb_url() {  # $1 = name, $2 = url
     apt_install "$TMP/$1.deb"
 }
 app_chrome()   { have google-chrome || install_deb_url chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; }
-app_vscode()   { have code || install_deb_url vscode "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"; }
+app_vscode() {
+    have code || install_deb_url vscode "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    copy_vscode_config
+}
+# VS Code owns ~/.config/Code/User (storage, extensions state), so these two files
+# are copied rather than stowed. Edits made in VS Code are backed up before being replaced.
+copy_vscode_config() {
+    local dst=~/.config/Code/User
+    mkdir -p "$dst" ~/.dotfiles-backup/.config/Code/User
+    for f in settings.json keybindings.json; do
+        if [ -f "$dst/$f" ] && ! cmp -s "$DOTFILES/vscode/$f" "$dst/$f"; then
+            cp "$dst/$f" ~/.dotfiles-backup/.config/Code/User/"$f"
+            echo "backed up ~/.config/Code/User/$f"
+        fi
+        cp "$DOTFILES/vscode/$f" "$dst/$f"
+    done
+}
 app_whatsapp() { sudo snap install whatsapp-linux-app; }
 app_nordvpn()  { sudo snap install nordvpn; }
 app_tidal()    { sudo flatpak install -y flathub com.mastermindzh.tidal-hifi; }
@@ -147,6 +174,19 @@ app_nvidia() {
     lspci | grep -qi nvidia || { echo "No NVIDIA GPU, skipping driver"; return; }
     apt_install ubuntu-drivers-common nvtop
     sudo ubuntu-drivers install
+}
+
+choose_apps() {  # drop the optional apps the user declines, unless APPS was given explicitly
+    [ -n "$APPS_GIVEN" ] && return
+    local keep=()
+    for app in "${APPS[@]}"; do
+        if in_list "$app" "${OPTIONAL_APPS[@]}" && ! ask "Install $app?"; then
+            echo "skipping $app"
+            continue
+        fi
+        keep+=("$app")
+    done
+    APPS=("${keep[@]}")
 }
 
 section_apps() {
@@ -186,6 +226,7 @@ section_link() {
 # ---------------------------------------------------------------- main
 sections=("$@")
 [ ${#sections[@]} -eq 0 ] && sections=("${ALL_SECTIONS[@]}")
+in_list apps "${sections[@]}" && choose_apps
 sudo -v
 for s in "${sections[@]}"; do "section_$s"; done
 log "Done. Log out and pick the i3 session at the login screen."

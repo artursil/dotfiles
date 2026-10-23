@@ -24,15 +24,18 @@ It runs these sections in order. Each step skips anything already installed, so 
 | `desktop`  | i3, polybar, picom, rofi, dunst, feh, maim, playerctl, brightnessctl, pavucontrol, nm-applet, dex, xss-lock, xautolock, i3lock-color, betterlockscreen |
 | `terminal` | ghostty, kitty, Nerd Fonts (FiraCode, Meslo, JetBrainsMono) |
 | `dev`      | neovim (latest stable, in `/opt`), rust + rust-analyzer, node/npm, go, uv, docker, oh-my-posh, zoxide, fzf, lazygit, tmux tpm, tmuxifier |
-| `apps`     | chrome, vscode, tidal (tidal-hifi), whatsapp, zotero, obs, nordvpn, nvidia driver (only if an NVIDIA GPU is found) |
+| `apps`     | chrome, vscode (+ its settings and keybindings), nvidia driver (only if an NVIDIA GPU is found); optional, asked one by one: tidal (tidal-hifi), whatsapp, zotero, obs, nordvpn |
 | `link`     | stows all configs into `~`, clones the qutebrowser theme, copies the wallpaper, installs tmux and nvim plugins, makes zsh the login shell |
 
-You can run only some sections, or pick which apps to install:
+The big optional apps are asked about (`Install obs? [y/N]`) before anything runs, so answer the prompts and walk away. You can run only some sections, pick the apps yourself (no prompts then), or say yes to everything:
 
 ```bash
 ./install.sh base dev link
 APPS="tidal vscode" ./install.sh apps
+YES=1 ./install.sh
 ```
+
+VS Code settings and keybindings live in `vscode/` and are copied into `~/.config/Code/User/` right after VS Code is installed (also on re-runs; a changed local copy goes to `~/.dotfiles-backup/` first). They are copied, not stowed, because VS Code writes a lot of its own state into that folder.
 
 If a real file is in the way of a link (for example the default `~/.zshrc`), the script moves it to `~/.dotfiles-backup/` before linking.
 
@@ -55,6 +58,7 @@ zshrc/.zshrc                 -> ~/.zshrc
 tmux/.tmux.conf              -> ~/.tmux.conf
 nvim/.config/nvim/           -> ~/.config/nvim/
 i3/ polybar/ picom/ rofi/ dunst/ ghostty/ kitty/ ohmyposh/ qutebrowser/ ranger/
+vscode/settings.json         -> copied to ~/.config/Code/User/  (not stowed)
 ```
 
 To link one package by hand: `cd ~/dotfiles && stow nvim`.
